@@ -1,19 +1,25 @@
-import pg from 'pg'
 import fs from 'fs'
- 
-var sql = fs.readFileSync('config/ticket.sql').toString()
+import { Sequelize } from 'sequelize'
+import { importData } from './DataInit.js';
+export const db = new Sequelize('postgres', 'test', '1234', {
+    host: 'localhost',  
+    dialect: 'postgres',
+    pool: {
+        max: 5,
+        min: 0, 
+        acquire: 30000,  
+        idle: 10000 
+    }
+});
+// export const db = new Sequelize('postgres://test:1234@localhost:5432');
+
+
+
 export async function connectDB() {
-    const client = new pg.Pool({
-        host: '127.0.0.1',
-        user: 'postgres',
-        database: 'postgres',
-        password: 'Mm.465276802',
-        port: 5432,
-    });
     try {
-        await client.connect()
-        await client.query(sql)
-    } catch (error) {
+        await db.authenticate()
+        await importData()
+    } catch (error) { 
         console.error(error)
         process.exit(1)
     }

@@ -1,4 +1,3 @@
-import fs from 'fs'
 import { Sequelize } from 'sequelize'
 import { importData } from './DataInit.js';
 export const db = new Sequelize('postgres', 'test', '1234', {

@@ -25,12 +25,11 @@ async function processLineByLine(filePath, tableName) {
             value = value.replace(`'`, `\'`)
             values.push(!Number.isInteger(value) ? `'${value}'` : value)
         }
-        const query = `
-        INSERT INTO ${tableName}(${columnNames}) VALUES (${values.join(',')});`
+        const query = `INSERT INTO ${tableName}(${columnNames}) VALUES (${values.join(',')});`
         try {
             await exec(query)
         } catch (error) {
-
+ 
         }
     }
 }
@@ -40,27 +39,36 @@ export async function importData() {
     await exec(createTablesQuery)
     const datas = [
         {
-            path: 'C:\\Users\\ASUS\\Desktop\\sharif\\web\\hw2\\TicketDatabase\\aircraft_type.csv',
-            name: 'aircraft_type'
-        },
-        {
-            path: 'C:\\Users\\ASUS\\Desktop\\sharif\\web\\hw2\\TicketDatabase\\aircraft_layout.csv',
-            name: 'aircraft_layout'
-        },
-        {
-            path: 'C:\\Users\\ASUS\\Desktop\\sharif\\web\\hw2\\TicketDatabase\\aircraft.csv',
+            path: '..\\TicketDatabase\\aircraft.csv',
             name: 'aircraft'
         },
         {
-            path: 'C:\\Users\\ASUS\\Desktop\\sharif\\web\\hw2\\TicketDatabase\\country.csv',
+            path: '..\\TicketDatabase\\aircraft_layout.csv',
+            name: 'aircraft_layout'
+        },
+        {
+            path: '..\\TicketDatabase\\aircraft_type.csv',
+            name: 'aircraft_type'
+        },
+        {
+            path: '..\\TicketDatabase\\airport.csv',
+            name: 'airport'
+        },
+        {
+            path: '..\\TicketDatabase\\country.csv',
             name: 'country'
         },
         {
-            path: 'C:\\Users\\ASUS\\Desktop\\sharif\\web\\hw2\\TicketDatabase\\city.csv',
+            path: '..\\TicketDatabase\\city.csv',
             name: 'city'
+        },
+        {
+            path: '..\\TicketDatabase\\flight.csv',
+            name: 'flight'
         },
     ]
     for (const data of datas) {
+        // TODO check https://stackoverflow.com/questions/52734080/how-to-insert-bulk-data-to-postgresql-db-from-csv-file
         await processLineByLine(data.path, data.name)
     }
 }

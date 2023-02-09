@@ -10,7 +10,6 @@ export const db = new Sequelize('postgres', 'test', '1234', {
         idle: 10000 
     }
 });
-// export const db = new Sequelize('postgres://test:1234@localhost:5432');
 
 
 

@@ -3,6 +3,18 @@ import readline from 'readline'
 import fs from 'fs'
 
 async function processLineByLine(filePath, tableName) {
+    const countQuery = `SELECT COUNT(*) FROM ${tableName};`
+    try {
+        let response = await exec(countQuery)
+        if (response[0][0].count > 0) {
+            return
+        }
+        
+        
+    } catch (error) {
+
+    }
+    
     const fileStream = fs.createReadStream(filePath);
     const rl = readline.createInterface({
         input: fileStream,
@@ -74,5 +86,5 @@ export async function importData() {
 }
 
 async function exec(query) {
-    await db.query(query)
+    return await db.query(query)
 }

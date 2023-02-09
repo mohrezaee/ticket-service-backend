@@ -2,7 +2,7 @@ import { AircraftType } from "../model/aircraft_type.model.js";
 
 
 export async function createAircraftType(data) {
-    const aircraft = new Aircraft(data)
+    const aircraft = new AircraftType(data)
     return await aircraft.save()
 }
 

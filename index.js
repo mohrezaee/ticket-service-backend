@@ -3,13 +3,14 @@ import dotenv from 'dotenv'
 import { connectDB } from './config/db.config.js';
 import { createOffer, getOffer } from './service/offer.service.js';
 import { getAircraftType } from './service/aircraft_type.service.js';
+import bodyParser from 'body-parser';
 dotenv.config()
 
 // import { getTasks, createTask, updateTask, deleteTask } from './controller/ticket.js';
 
 const app = express(); 
 const port = process.env.PORT || 3000;
-
+app.use(bodyParser.json())
 // app.get('/api/tasks', (req, res) => {
 //     getTasks().then(data => res.json(data));
 // });
@@ -30,12 +31,9 @@ const port = process.env.PORT || 3000;
 app.get('/create', async (req, res) => {
     res.send( await createOffer({}))
 });
-app.get('/get', async (req, res) => {
-    res.send( await getAircraftType())
+app.post('/offers', async (req, res) => {
+    res.send( await getOffer(req.body))
 });
-
-
-
 
 app.listen(port, () => {
     console.log(`Server listening on the port  ${port}`);

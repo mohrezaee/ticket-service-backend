@@ -1,28 +1,46 @@
 import express from 'express';
 import dotenv from 'dotenv'
 import { connectDB } from './config/db.config.js';
-import { createOffer, getOffer } from './service/offer.service.js';
-import { getAircraftType } from './service/aircraft_type.service.js';
+import { getOffer } from './service/offer.service.js';
 import bodyParser from 'body-parser';
-import { createPurchase } from './service/purchase.service.js';
+import { createPurchase, getPurchases, updateTransactionResult } from './service/purchase.service.js';
 dotenv.config()
 
-const app = express(); 
+const app = express();
 const port = process.env.PORT || 3000;
 app.use(bodyParser.json())
-app.get('/create', async (req, res) => {
-    res.send( await createOffer({}))
-});
+
 app.post('/offers', async (req, res) => {
-    res.send( await getOffer(req.body))
+    try {
+        res.status(200).json(await getOffer(req.body))
+    } catch (error) {
+        res.status(500).send('internal server error')
+    }
 });
 
 app.post('/purchase', async (req, res) => {
-    res.send(await createPurchase(req.body))
+    try {
+        res.status(200).json(await createPurchase(req.body))
+    } catch (error) {
+        res.status(500).send('internal server error')
+    }
 })
 
-app.patch('/purchase/:id', async(req, res) => {
-    
+app.get('/purchase/:title/:result', async (req, res) => {
+    try {
+        const { title, result } = req.params
+        res.status(200).json(await updateTransactionResult({ title, result }))
+    } catch (error) {
+        res.status(500).send('internal server error')
+    }
+})
+app.get('/purchases/:user_id', async (req, res) => {
+    try {
+        const {user_id} = req.params
+        res.status(200).json(await getPurchases(user_id))
+    } catch (error) {
+        res.status(500).send('internal server error')
+    }
 })
 
 app.listen(port, () => {

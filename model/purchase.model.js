@@ -14,6 +14,10 @@ export const Purchase = db.define('purchase', {
         type: Sequelize.STRING,
         allowNull: false
     },
+    pre_id: {
+        type: Sequelize.STRING,
+        allowNull: false
+    },
     first_name: {
         type: Sequelize.STRING,
         allowNull: false,

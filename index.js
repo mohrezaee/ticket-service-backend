@@ -7,28 +7,9 @@ import bodyParser from 'body-parser';
 import { createPurchase } from './service/purchase.service.js';
 dotenv.config()
 
-// import { getTasks, createTask, updateTask, deleteTask } from './controller/ticket.js';
-
 const app = express(); 
 const port = process.env.PORT || 3000;
 app.use(bodyParser.json())
-// app.get('/api/tasks', (req, res) => {
-//     getTasks().then(data => res.json(data));
-// });
-
-// app.post('/api/task', (req, res) => {
-//     console.log(req.body);
-//     createTask(req.body.task).then(data => res.json(data));
-// });
- 
-// app.put('/api/task', (req, res) => {
-//     updateTask(req.body.task).then(data => res.json(data));
-// });
-
-// app.delete('/api/task/:id', (req, res) => {
-//     deleteTask(req.params.id).then(data => res.json(data));
-// });
-
 app.get('/create', async (req, res) => {
     res.send( await createOffer({}))
 });

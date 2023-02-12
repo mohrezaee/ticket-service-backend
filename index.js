@@ -20,7 +20,7 @@ app.post('/offers', async (req, res) => {
     }
 });
 
-app.post('/airports', async (req, res) => {
+app.get('/airports', async (req, res) => {
     try {
         res.status(200).json(await getAirports())
     } catch (error) {
@@ -36,7 +36,7 @@ app.post('/purchase',auth, async (req, res) => {
     }
 })
 
-app.get('/purchase/:title/:result',auth, async (req, res) => {
+app.get('/purchase/:title/:result', async (req, res) => {
     try {
         const { title, result } = req.params
         res.status(200).json(await updateTransactionResult({ title, result }))
